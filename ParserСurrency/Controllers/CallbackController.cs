@@ -30,11 +30,6 @@ namespace ParserСurrency.Controllers
             _configuration = configuration;
         }
 
-        public CallbackController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
         [HttpPost]
         public IActionResult Callback([FromBody] Updates updates)
         {
