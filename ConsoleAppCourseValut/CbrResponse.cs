@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleAppCourseCurrency
 {
-    class CbrResponse
+    public class CbrResponse
     {
         public DateTime Date { get; set; }
 

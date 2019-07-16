@@ -9,6 +9,8 @@ using VkNet.Model;
 using VkNet.Model.RequestParams;
 using VkNet.Utils;
 using ParserСurrency.Models;
+using Flurl.Http;
+using ConsoleAppCourseCurrency;
 
 namespace ParserСurrency.Controllers
 {
@@ -31,7 +33,7 @@ namespace ParserСurrency.Controllers
         }
 
         [HttpPost]
-        public IActionResult Callback([FromBody] Updates updates)
+        public async Task<IActionResult> CallbackAsync([FromBody] Updates updates)
         {
             // Проверяем, что находится в поле "type" 
             switch (updates.Type)
@@ -46,12 +48,14 @@ namespace ParserСurrency.Controllers
                         // Десериализация
                         var msg = Message.FromJson(new VkResponse(updates.Object));
 
+                        CbrResponse cbrResponse = await "https://www.cbr-xml-daily.ru/daily_json.js".GetJsonAsync<CbrResponse>();
+                        var currencies = cbrResponse.Valute;
                         // Отправим в ответ полученный от пользователя текст
                         _vkApi.Messages.Send(new MessagesSendParams
                         {
                             RandomId = new DateTime().Millisecond,
                             PeerId = msg.PeerId.Value,
-                            Message = msg.Text
+                            Message = $"{currencies.USD}\n{currencies.EUR}\n{currencies.UAH}"
                         });
                         break;
                     }

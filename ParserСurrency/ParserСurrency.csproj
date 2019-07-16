@@ -11,4 +11,8 @@
     <PackageReference Include="VkNet" Version="1.44.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleAppCourseValut\ConsoleAppCourseCurrency.csproj" />
+  </ItemGroup>
+
 </Project>

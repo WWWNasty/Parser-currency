@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleAppCourseCurrency
 {
-    class Valute
+    public class Valute
     {
         public Currency USD { get; set; }
 

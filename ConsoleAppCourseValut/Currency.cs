@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleAppCourseCurrency
 {
-    class Currency
+    public class Currency
     {
         public string ID { get; set; }
 
@@ -19,5 +19,8 @@ namespace ConsoleAppCourseCurrency
         public double Value { get; set; }
 
         public double Previous { get; set; }
+
+        public override string ToString() => $"Курс {Name}: {Value / Nominal} ₽";
     }
+
 }
