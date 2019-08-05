@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConsoleAppCourseCurrency
+﻿namespace BusinessLogicLayer.Objects.Dtos
 {
     public class Currency
     {
@@ -20,7 +16,6 @@ namespace ConsoleAppCourseCurrency
 
         public double Previous { get; set; }
 
-        public override string ToString() => $"Курс {Name}: {Value / Nominal} ₽";
+        // public override string ToString() => $"Курс {Name}: {Value / Nominal} ₽";
     }
-
 }

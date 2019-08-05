@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -6,13 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1"/>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="VkNet" Version="1.44.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleAppCourseValut\ConsoleAppCourseCurrency.csproj" />
+      <ProjectReference Include="..\BusinessLogicLayer.Implementation\BusinessLogicLayer.Implementation.csproj"/>
+      <ProjectReference Include="..\BusinessLogicLayer.Objects\BusinessLogicLayer.Objects.csproj"/>
+  </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Models"/>
   </ItemGroup>
 
 </Project>
