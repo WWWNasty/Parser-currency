@@ -6,6 +6,6 @@ namespace Abstraction.Interfaces
 {
     public interface ICurrencyProvider
     {
-        Task<IEnumerable<CurrencyDataResponse>> GetAnswerAsync();
+        Task<IEnumerable<CurrencyExchangeRate>> GetExchangeRateAsync();
     }
 }

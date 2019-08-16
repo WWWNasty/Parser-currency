@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Abstraction.Interfaces;
+using BusinessLogicLayer.Objects.Dtos;
 using DataAccessLayer.Models.Entities;
 using Microsoft.Extensions.Configuration;
 using VkNet.Abstractions;
@@ -28,45 +29,46 @@ namespace BusinessLogicLayer.Implementation.Services
             _currencyProviderService = currencyProviderService;
         }
 
-        public async Task<string> SendMessage(Updates updates)
+        public async Task<string> SendResponse(Updates updates)
         {
+            if (updates == null)
+            {
+                return string.Empty;
+            }
             // Проверяем, что находится в поле "type" 
 
             switch (updates.Type)
             {
                 // Если это уведомление для подтверждения адреса
-                case "confirmation":
+                case VkMessagesTypes.Confirmation:
                     // Отправляем строку для подтверждения 
                     return _configuration["Config:Confirmation"];
 
-                case "message_new":
+                case VkMessagesTypes.MessageNew:
                 {
                     // Десериализация
-                    var msg = Message.FromJson(new VkResponse(updates.Object));
+                    var vkMessage = Message.FromJson(new VkResponse(updates.Object));
 
                     // Отправим в ответ полученный от пользователя текст
-                    IEnumerable<CurrencyDataResponse> currencies = await _currencyProviderService.GetAnswerAsync();
+                    IEnumerable<CurrencyExchangeRate> currencies = await _currencyProviderService
+                        .GetExchangeRateAsync();
 
-                    StringBuilder message = new StringBuilder(String.Empty);
+                    string responseMessage = currencies.Aggregate(string.Empty,
+                        (previous, current) => previous + $"{current.Name}: {current.Value} ₽\n");
 
-                    foreach (CurrencyDataResponse currencyData in currencies)
-                    {
-                        message.Append($"{currencyData.Name}: {currencyData.Value} ₽\n");
-                    }
-
-                    if (msg.PeerId != null)
+                    if (vkMessage.PeerId != null)
                     {
                         _vkApi.Messages.Send(new MessagesSendParams
                         {
                             RandomId = new DateTime().Millisecond,
 
-                            PeerId = msg.PeerId.Value,
+                            PeerId = vkMessage.PeerId.Value,
 
-                            Message = message.ToString()
+                            Message = responseMessage
                         });
                     }
 
-                    break;
+                    return responseMessage;
                 }
             }
 

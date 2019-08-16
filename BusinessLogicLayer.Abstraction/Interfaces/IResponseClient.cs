@@ -5,6 +5,6 @@ namespace Abstraction.Interfaces
 {
     public interface IResponseClient
     {
-        Task<string> SendMessage(Updates updates);
+        Task<string> SendResponse(Updates updates);
     }
 }

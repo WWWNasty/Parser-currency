@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace BusinessLogicLayer.Objects.Dtos
+namespace BusinessLogicLayer.Objects.Dtos.Cbr
 {
     public class CbrResponse
     {
@@ -13,6 +13,6 @@ namespace BusinessLogicLayer.Objects.Dtos
         /// Валюты
         /// </summary>
         [JsonProperty("Valute")]
-        public Valute Currencies { get; set; }
+        public CbrCurrencies Currencies { get; set; }
     }
 }

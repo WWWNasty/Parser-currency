@@ -37,11 +37,13 @@ namespace ParserСurrency
                 return api;
             });
 
-            services.AddSingleton<ICurrencyProvider, CbrCurrencyProviderService>();
+            services.AddSingleton<IUnofficialSource, CurrateCurrencyProviderService>();
+
+            services.AddSingleton<IOfficialSource, CbrExchangeRateProvider>();
 
             services.AddSingleton<IResponseClient, VkResponseClientService>();
 
-            services.AddAutoMapper(options => options.AddProfile<MapperProfiles>());
+            services.AddAutoMapper(options => options.AddProfile<ExchangeRateMappingProfile>());
         }
 
 
