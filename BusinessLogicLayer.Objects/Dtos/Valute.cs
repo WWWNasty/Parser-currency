@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConsoleAppCourseCurrency
+﻿namespace BusinessLogicLayer.Objects.Dtos
 {
     public class Valute
     {
