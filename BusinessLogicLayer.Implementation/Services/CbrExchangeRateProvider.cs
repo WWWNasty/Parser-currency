@@ -3,23 +3,31 @@ using System.Threading.Tasks;
 using Abstraction.Interfaces;
 using AutoMapper;
 using BusinessLogicLayer.Objects.Dtos;
+using BusinessLogicLayer.Objects.Dtos.Cbr;
 using DataAccessLayer.Models.Entities;
 using Flurl.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogicLayer.Implementation.Services
 {
-    public class CbrCurrencyProviderService : ICurrencyProvider
+    public class CbrExchangeRateProvider : IOfficialSource
     {
         private readonly IMapper _mapper;
 
-        public CbrCurrencyProviderService(IMapper mapper)
+        private readonly IConfiguration _configuration;
+
+        public CbrExchangeRateProvider(IMapper mapper, IConfiguration configuration)
         {
             _mapper = mapper;
+
+            _configuration = configuration;
         }
 
-        public async Task<IEnumerable<CurrencyDataResponse>> GetAnswerAsync()
+
+        public async Task<IEnumerable<CurrencyExchangeRate>> GetExchangeRateAsync()
         {
-            CbrResponse cbrResponse = await "https://www.cbr-xml-daily.ru/daily_json.js".GetJsonAsync<CbrResponse>();
+            CbrResponse cbrResponse = await _configuration["Config:LinqCbr"]
+                .GetJsonAsync<CbrResponse>();
 
             Currency[] currencies =
             {
@@ -37,8 +45,9 @@ namespace BusinessLogicLayer.Implementation.Services
 //                    Value = currency.Value / currency.Nominal
 //                })
 //                .ToList();
-            return _mapper.Map<IEnumerable<CurrencyDataResponse>>(currencies,
-                options => options.Items["Date"] = cbrResponse.Date);
+
+            return _mapper.Map<IEnumerable<CurrencyExchangeRate>>(currencies,
+                options => options.Items[CbrConstants.Date] = cbrResponse.Date);
         }
     }
 }

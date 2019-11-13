@@ -21,7 +21,7 @@ namespace ParserСurrency.Controllers
         [HttpPost]
         public IActionResult CallbackAsync(Updates updates)
         {
-            var response = _vkResponseClientService.SendMessage(updates);
+            var response = _vkResponseClientService.SendResponse(updates);
 
             // Возвращаем "ok" серверу Callback API
             return Ok(response);

@@ -1,4 +1,4 @@
-﻿namespace BusinessLogicLayer.Objects.Dtos
+﻿namespace BusinessLogicLayer.Objects.Dtos.Cbr
 {
     public class Currency
     {
@@ -15,7 +15,5 @@
         public double Value { get; set; }
 
         public double Previous { get; set; }
-
-        // public override string ToString() => $"Курс {Name}: {Value / Nominal} ₽";
     }
 }

@@ -3,7 +3,7 @@ using DataAccessLayer.Models.Enums;
 
 namespace DataAccessLayer.Models.Entities
 {
-    public class CurrencyDataResponse
+    public class CurrencyExchangeRate
     {
         public SourceType DataSource { get; set; }
 

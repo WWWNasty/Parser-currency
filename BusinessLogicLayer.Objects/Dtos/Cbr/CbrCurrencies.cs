@@ -1,6 +1,6 @@
-﻿namespace BusinessLogicLayer.Objects.Dtos
+﻿namespace BusinessLogicLayer.Objects.Dtos.Cbr
 {
-    public class Valute
+    public class CbrCurrencies
     {
         public Currency USD { get; set; }
 
